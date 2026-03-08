@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defence English Mastery - NDA, CDS, AFCAT</title>
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- React and ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-neutral-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { 
+            Shield, BookOpen, Target, Brain, ArrowRight, Menu, X, Star, 
+            Award, RotateCcw, Compass, MapPin, CheckCircle2 
+        } = lucide;
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('home');
+            const [selectedExam, setSelectedExam] = useState('CDS');
+            const [quizStarted, setQuizStarted] = useState(false);
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showResult, setShowResult] = useState(false);
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            const examInfo = {
+                NDA: { color: "bg-blue-600", desc: "National Defence Academy (Army/Navy/Air Force)" },
+                CDS: { color: "bg-red-600", desc: "Combined Defence Services (IMA/OTA/AFA/INA)" },
+                AFCAT: { color: "bg-sky-500", desc: "Air Force Common Admission Test" }
+            };
+
+            const grammarModules = [
+                {
+                    title: "Subject-Verb Agreement",
+                    rules: [
+                        "Words like 'Each', 'Every' take singular verbs.",
+                        "Collective nouns take singular verbs when acting as a unit.",
+                        "With 'Not only... but also', verb follows the nearest subject."
+                    ]
+                },
+                {
+                    title: "Advanced Tenses",
+                    rules: [
+                        "Present Perfect: Used for actions finished at an indefinite time.",
+                        "Future Perfect: Actions completed by a future point.",
+                        "Conditionals: If + simple past -> would + verb."
+                    ]
+                }
+            ];
+
+            const vocabMaster = [
+                { word: "Amiable", meaning: "Friendly and pleasant (मैत्रीपूर्ण)" },
+                { word: "Benevolent", meaning: "Well meaning and kindly (परोपकारी)" },
+                { word: "Diligent", meaning: "Hardworking and careful (कष्टाळू)" },
+                { word: "Fortitude", meaning: "Courage in pain or adversity (धैर्य)" },
+                { word: "Resilient", meaning: "Able to recover quickly (स्थितप्रज्ञ)" }
+            ];
+
+            const questions = [
+                { q: "Synonym of 'ABANDON':", options: ["Keep", "Discard", "Accept", "Follow"], ans: "Discard", hint: "To leave something permanently." },
+                { q: "The news ______ not true.", options: ["are", "were", "is", "be"], ans: "is", hint: "'News' is always singular." },
+                { q: "I prefer tea ______ coffee.", options: ["than", "to", "over", "with"], ans: "to", hint: "Words like prefer, senior take 'to'." }
+            ];
+
+            const handleQuizAnswer = (opt) => {
+                if (opt === questions[currentQuestion].ans) setScore(score + 1);
+                if (currentQuestion + 1 < questions.length) {
+                    setCurrentQuestion(currentQuestion + 1);
+                } else {
+                    setShowResult(true);
+                }
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col">
+                    <nav className="bg-slate-900 text-white sticky top-0 z-50 shadow-xl border-b border-slate-800">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div className="flex justify-between items-center h-16">
+                                <div className="flex items-center gap-2">
+                                    <Shield className="text-red-500 fill-red-500" size={30} />
+                                    <div className="flex flex-col">
+                                        <span className="text-lg font-bold tracking-tighter leading-none">DEFENCE ENGLISH</span>
+                                        <span className="text-[10px] text-slate-400 font-medium tracking-[0.2em]">MASTERY PLATFORM</span>
+                                    </div>
+                                </div>
+                                <div className="hidden md:flex items-center space-x-8 text-sm font-semibold uppercase">
+                                    {['home', 'grammar', 'vocab', 'quiz'].map(tab => (
+                                        <button key={tab} onClick={() => setActiveTab(tab)} className={`hover:text-red-400 ${activeTab === tab ? 'text-red-500 underline underline-offset-8' : ''}`}>{tab}</button>
+                                    ))}
+                                </div>
+                                <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>{isMenuOpen ? <X /> : <Menu />}</button>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <main className="max-w-6xl mx-auto px-4 py-8 flex-grow">
+                        {activeTab === 'home' && (
+                            <div className="space-y-8">
+                                <div className="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-8 rounded-[2rem] shadow-2xl relative overflow-hidden">
+                                    <div className="relative z-10">
+                                        <h1 className="text-4xl font-black mb-4">Prepare for Your Military Career.</h1>
+                                        <p className="text-slate-300 text-lg mb-8">NDA, CDS, आणि AFCAT उमेदवारांसाठी मोफत इंग्रजी तयारी.</p>
+                                        <button onClick={() => setActiveTab('quiz')} className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-bold transition flex items-center gap-2">Start Prep <ArrowRight size={18} /></button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {activeTab === 'grammar' && (
+                            <div className="space-y-6">
+                                {grammarModules.map((mod, i) => (
+                                    <div key={i} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                                        <div className="bg-slate-900 text-white px-6 py-4 font-bold">{mod.title}</div>
+                                        <div className="p-6 space-y-4">
+                                            {mod.rules.map((rule, idx) => (
+                                                <div key={idx} className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100"><CheckCircle2 className="text-green-600 mt-1" size={18} /> <p>{rule}</p></div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {activeTab === 'vocab' && (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {vocabMaster.map((v, i) => (
+                                    <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                                        <h4 className="text-xl font-bold text-slate-900">{v.word}</h4>
+                                        <p className="text-slate-600 italic">{v.meaning}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {activeTab === 'quiz' && (
+                            <div className="flex justify-center">
+                                {!quizStarted ? (
+                                    <div className="bg-white p-12 rounded-[2.5rem] shadow-xl border border-slate-200 text-center max-w-md w-full">
+                                        <Brain className="text-red-600 mx-auto mb-6" size={40} />
+                                        <h2 className="text-2xl font-black mb-8">Mock Drill</h2>
+                                        <button onClick={() => setQuizStarted(true)} className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold">Engage Now</button>
+                                    </div>
+                                ) : showResult ? (
+                                    <div className="bg-white p-12 rounded-[2.5rem] shadow-xl text-center max-w-md w-full">
+                                        <Award className="text-yellow-500 mx-auto mb-6" size={80} />
+                                        <h2 className="text-3xl font-black">Score: {score}/{questions.length}</h2>
+                                        <button onClick={restartQuiz} className="mt-8 bg-slate-100 py-4 w-full rounded-2xl font-bold flex items-center justify-center gap-2"><RotateCcw size={20}/> Re-drill</button>
+                                    </div>
+                                ) : (
+                                    <div className="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-200 max-w-2xl w-full">
+                                        <h3 className="text-2xl font-bold mb-10">{questions[currentQuestion].q}</h3>
+                                        <div className="grid grid-cols-1 gap-4 mb-10">
+                                            {questions[currentQuestion].options.map((opt, i) => (
+                                                <button key={i} onClick={() => handleQuizAnswer(opt)} className="text-left p-5 rounded-2xl border-2 hover:border-red-500 hover:bg-red-50 font-bold">{opt}</button>
+                                            ))}
+                                        </div>
+                                        <div className="bg-amber-50 p-4 rounded-2xl text-amber-800 italic flex gap-3"><Star size={18}/> <p>{questions[currentQuestion].hint}</p></div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </main>
+
+                    <footer className="bg-white border-t py-4 text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        Jai Hind 🇮🇳 • Operational Status: Live
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+```
