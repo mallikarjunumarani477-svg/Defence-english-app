@@ -4,239 +4,305 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Defence English Mastery - NDA, CDS, AFCAT</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS for Fast Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React and ReactDOM -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
         body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         .military-card { transition: all 0.2s ease; cursor: pointer; }
-        .military-card:active { transform: scale(0.98); }
-        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .military-card:active { transform: scale(0.95); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .nav-active { color: #ef4444; border-bottom: 2px solid #ef4444; }
     </style>
 </head>
-<body class="bg-slate-50">
-    <div id="root">
-        <div class="flex items-center justify-center min-h-screen">
-            <div class="text-center">
-                <p class="text-xl font-black text-slate-800 animate-pulse">DEPLOYING MISSION... 🇮🇳</p>
-                <p class="text-xs text-slate-400 mt-2 font-bold uppercase tracking-widest">Jai Hind Aspirant</p>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-slate-900 p-2 rounded-lg">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L3 7v9c0 5 9 10 9 10s9-5 9-10V7l-9-5z"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-slate-900 tracking-tighter">DEFENCE MASTER</h1>
+                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Jai Hind Platform</p>
+                </div>
             </div>
+            
+            <div class="hidden md:flex gap-6">
+                <button onclick="showTab('home')" class="nav-item nav-active uppercase text-[10px] font-black tracking-widest px-2">Home</button>
+                <button onclick="showTab('pyq')" class="nav-item uppercase text-[10px] font-black tracking-widest px-2">PYQs</button>
+                <button onclick="showTab('grammar')" class="nav-item uppercase text-[10px] font-black tracking-widest px-2">Grammar</button>
+                <button onclick="showTab('quiz')" class="nav-item uppercase text-[10px] font-black tracking-widest px-2">Quiz</button>
+            </div>
+
+            <button onclick="shareApp()" class="bg-emerald-500 p-2.5 rounded-xl shadow-md">
+                <svg class="w-5 h-5 text-white fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .004 5.412.004 12.049c0 2.12.554 4.189 1.605 6.02L0 24l6.132-1.61a11.806 11.806 0 005.918 1.583h.005c6.635 0 12.045-5.412 12.045-12.049 0-3.216-1.252-6.24-3.526-8.514z"></path></svg>
+            </button>
         </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-5xl mx-auto w-full px-4 py-8">
+        
+        <!-- Home Tab -->
+        <section id="home" class="tab-content active animate-in fade-in duration-300">
+            <div class="bg-slate-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl mb-8">
+                <div class="relative z-10">
+                    <span class="bg-red-600 text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-widest mb-4 inline-block">India's Aspirant Hub</span>
+                    <h2 class="text-4xl sm:text-6xl font-black mb-4 leading-tight">Master Your <br/>Uniform Mission.</h2>
+                    <p class="text-slate-400 mb-8 max-w-sm text-lg leading-relaxed">Dedicated to NDA, CDS, and AFCAT warriors. Study for free.</p>
+                    <button onclick="showTab('pyq')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-2xl flex items-center gap-3 transition shadow-xl">
+                        Explore PYQs <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 military-card" onclick="showTab('pyq')">
+                    <h3 class="font-black text-slate-800">PYQ Archive</h3>
+                    <p class="text-slate-500 text-xs mt-1">मागील वर्षांचे प्रश्न उत्तरासह.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 military-card" onclick="showTab('grammar')">
+                    <h3 class="font-black text-slate-800">Grammar</h3>
+                    <p class="text-slate-500 text-xs mt-1">शून्यपासून प्रगत व्याकरणाचे नियम.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 military-card" onclick="showTab('quiz')">
+                    <h3 class="font-black text-slate-800">Practice Quiz</h3>
+                    <p class="text-slate-500 text-xs mt-1">तुमची दररोजची प्रगती तपासा.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PYQ Tab -->
+        <section id="pyq" class="tab-content animate-in fade-in">
+            <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tighter border-l-4 border-red-600 pl-4 mb-8">Solved PYQs</h2>
+            <div id="pyq-list" class="space-y-6">
+                <!-- Content generated by JS -->
+            </div>
+        </section>
+
+        <!-- Grammar Tab -->
+        <section id="grammar" class="tab-content animate-in fade-in">
+            <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tighter border-l-4 border-red-600 pl-4 mb-8">Grammar Lessons</h2>
+            <div id="grammar-list" class="space-y-6">
+                <!-- Content generated by JS -->
+            </div>
+        </section>
+
+        <!-- Quiz Tab -->
+        <section id="quiz" class="tab-content animate-in fade-in">
+            <div id="quiz-container" class="flex justify-center">
+                <!-- Content generated by JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 py-6 text-center mt-auto">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Jai Hind 🇮🇳 • Defence English Mastery</p>
+    </footer>
+
+    <!-- Bottom Mobile Nav -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-between z-50">
+        <button onclick="showTab('home')" class="mobile-nav-item nav-active"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></button>
+        <button onclick="showTab('pyq')" class="mobile-nav-item text-slate-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button>
+        <button onclick="showTab('grammar')" class="mobile-nav-item text-slate-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></button>
+        <button onclick="showTab('quiz')" class="mobile-nav-item text-slate-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></button>
     </div>
 
-    <script type="text/babel">
-        const { useState } = React;
+    <script>
+        // Tab Management
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update nav styles
+            document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(el => el.classList.remove('nav-active'));
+            document.querySelectorAll('.nav-item').forEach(el => {
+                if(el.textContent.toLowerCase() === tabId) el.classList.add('nav-active');
+            });
+            window.scrollTo(0, 0);
+        }
 
-        const Icon = ({ name, className = "w-6 h-6" }) => {
-            const icons = {
-                shield: <path d="M12 2L3 7v9c0 5 9 10 9 10s9-5 9-10V7l-9-5z" />,
-                target: <circle cx="12" cy="12" r="10" /><path d="M12 8v8M8 12h8" />,
-                book: <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z" />,
-                brain: <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1 0-4.88 2.5 2.5 0 0 1 0-4.88A2.5 2.5 0 0 1 9.5 2zM14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 0-4.88 2.5 2.5 0 0 0 0-4.88A2.5 2.5 0 0 0 14.5 2z" />,
-                arrow: <path d="M5 12h14M12 5l7 7-7 7" />,
-                award: <circle cx="12" cy="8" r="7" /><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.11" />,
-                history: <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />,
-                share: <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" />,
-                whatsapp: <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .004 5.412.004 12.049c0 2.12.554 4.189 1.605 6.02L0 24l6.132-1.61a11.806 11.806 0 005.918 1.583h.005c6.635 0 12.045-5.412 12.045-12.049 0-3.216-1.252-6.24-3.526-8.514z" />
-            };
-            return (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    {icons[name] || <circle cx="12" cy="12" r="10" />}
-                </svg>
-            );
+        // WhatsApp Sharing
+        function shareApp() {
+            const text = "Jai Hind! 🇮🇳 Check out this Defence English Mastery App: https://mallikarjunumarani477-svg.github.io/Defence-english-app/";
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        // Load PYQs
+        const pyqData = [
+            { exam: "CDS II 2023", question: "Neither of the two brothers were selected for the job.", ans: "B (Replace 'were' with 'was')", explain: "'Neither' is always singular." },
+            { exam: "NDA I 2024", question: "The teacher's advice was very VALUABLE.", ans: "Precious", explain: "Valuable means precious/worthy." }
+        ];
+
+        const pyqList = document.getElementById('pyq-list');
+        pyqData.forEach(item => {
+            pyqList.innerHTML += `
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+                    <span class="text-[10px] font-black bg-red-100 text-red-600 px-3 py-1 rounded-full uppercase">${item.exam}</span>
+                    <p class="text-lg font-bold text-slate-800 my-4">${item.question}</p>
+                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100 text-emerald-800 text-sm">
+                        <strong>Ans: ${item.ans}</strong><br/>${item.explain}
+                    </div>
+                </div>
+            `;
+        });
+
+        // Load Grammar
+        const grammarData = [
+            { title: "Subject-Verb Agreement", rules: ["Singular subject = Singular verb.", "'Each', 'Every' are ALWAYS singular."] },
+            { title: "Articles", rules: ["'An' for vowel sounds (An honest man).", "'The' for specific items."] }
+        ];
+
+        const grammarList = document.getElementById('grammar-list');
+        grammarData.forEach(mod => {
+            let rulesHtml = mod.rules.map(r => `<li class="flex gap-2 text-sm text-slate-700 font-bold mb-2">✅ ${r}</li>`).join('');
+            grammarList.innerHTML += `
+                <div class="bg-white rounded-[2rem] border border-slate-200 overflow-hidden">
+                    <div class="bg-slate-900 text-white px-8 py-4 font-black uppercase tracking-widest text-xs">${mod.title}</div>
+                    <div class="p-6"><ul>${rulesHtml}</ul></div>
+                </div>
+            `;
+        });
+
+        // Quiz Logic
+        const quizQuestions = [
+            { q: "Synonym of 'ABANDON':", options: ["Keep", "Discard", "Accept", "Follow"], ans: "Discard" },
+            { q: "The news ______ not true.", options: ["are", "were", "is", "be"], ans: "is" }
+        ];
+
+        let currentQuizIndex = 0;
+        let score = 0;
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (currentQuizIndex < quizQuestions.length) {
+                const q = quizQuestions[currentQuizIndex];
+                container.innerHTML = `
+                    <div class="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-200 max-w-sm w-full">
+                        <h3 class="text-2xl font-black text-slate-800 mb-8">${q.q}</h3>
+                        ${q.options.map(opt => `<button onclick="handleQuiz('${opt}')" class="w-full text-left p-4 rounded-2xl border-2 border-slate-100 hover:border-red-600 font-bold mb-3">${opt}</button>`).join('')}
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="bg-white p-12 rounded-[3rem] shadow-xl text-center max-w-sm w-full border border-slate-200">
+                        <h2 class="text-2xl font-black uppercase">Report</h2>
+                        <p class="text-6xl font-black text-red-600 my-8">${score} / ${quizQuestions.length}</p>
+                        <button onclick="location.reload()" class="bg-slate-900 text-white w-full py-4 rounded-2xl font-bold">RE-ENGAGE</button>
+                    </div>
+                `;
+            }
+        }
+
+        window.handleQuiz = function(opt) {
+            if (opt === quizQuestions[currentQuizIndex].ans) score++;
+            currentQuizIndex++;
+            renderQuiz();
         };
 
-        const App = () => {
-            const [activeTab, setActiveTab] = useState('home');
-            const [quizStarted, setQuizStarted] = useState(false);
-            const [currentQuestion, setCurrentQuestion] = useState(0);
-            const [score, setScore] = useState(0);
-            const [showResult, setShowResult] = useState(false);
-            const [isMenuOpen, setIsMenuOpen] = useState(false);
+        renderQuiz();
+    </script>
+</body>
+</html>
+    <script>
+        // Tab Management
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update nav styles
+            document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(el => el.classList.remove('nav-active'));
+            document.querySelectorAll('.nav-item').forEach(el => {
+                if(el.textContent.toLowerCase() === tabId) el.classList.add('nav-active');
+            });
+            window.scrollTo(0, 0);
+        }
 
-            const pyqData = [
-                { exam: "CDS II 2023", topic: "Spotting Errors", question: "Neither of the two (A)/ brothers were (B)/ selected for the job (C)/ No Error (D).", answer: "B", explanation: "'Neither' is always singular, so 'were' should be replaced by 'was'." },
-                { exam: "NDA I 2024", topic: "Synonyms", question: "The teacher's advice was very VALUABLE.", options: ["Cheap", "Precious", "Useless", "Common"], answer: "Precious", explanation: "Valuable means something of great worth, which is synonymous with 'Precious'." },
-                { exam: "AFCAT 2023", topic: "Idioms", question: "To be 'Under the weather' means:", options: ["To be happy", "To feel sick", "To enjoy rain", "To be rich"], answer: "To feel sick", explanation: "This idiom is used when someone is feeling slightly ill." },
-                { exam: "CDS I 2024", topic: "Prepositions", question: "He is superior ______ all his colleagues.", options: ["than", "to", "from", "over"], answer: "to", explanation: "Words ending in -ior (superior, junior, senior) take the preposition 'to'." },
-                { exam: "NDA II 2023", topic: "Tenses", question: "If I ______ a king, I would help the poor.", options: ["am", "was", "were", "had been"], answer: "were", explanation: "In imaginary/hypothetical sentences, 'were' is used for all subjects." }
-            ];
+        // WhatsApp Sharing
+        function shareApp() {
+            const text = "Jai Hind! 🇮🇳 Check out this Defence English Mastery App: https://mallikarjunumarani477-svg.github.io/Defence-english-app/";
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
 
-            const grammarModules = [
-                { title: "Basic Parts of Speech", rules: ["Noun: Names of people, objects, places.", "Pronoun: Used instead of a noun (I, You, He, She, They).", "Adjective: Describes a noun (Brave soldier).", "Adverb: Describes an action (Fought courageously)."] },
-                { title: "Subject-Verb Agreement", rules: ["Singular subject = Singular verb.", "Words like 'Each', 'Every', 'Neither' are ALWAYS singular.", "With 'Along with', verb follows the FIRST subject."] },
-                { title: "Articles (A, An, The)", rules: ["Use 'An' before vowel SOUNDS (An honest man).", "Use 'A' before consonant SOUNDS (A university).", "Use 'The' for specific or unique things (The Sun)."] }
-            ];
+        // Load PYQs
+        const pyqData = [
+            { exam: "CDS II 2023", question: "Neither of the two brothers were selected for the job.", ans: "B (Replace 'were' with 'was')", explain: "'Neither' is always singular." },
+            { exam: "NDA I 2024", question: "The teacher's advice was very VALUABLE.", ans: "Precious", explain: "Valuable means precious/worthy." }
+        ];
 
-            const quizQuestions = [
-                { q: "Synonym of 'ABANDON':", options: ["Keep", "Discard", "Accept", "Follow"], ans: "Discard", hint: "To leave permanently." },
-                { q: "The news ______ not true.", options: ["are", "were", "is", "be"], ans: "is", hint: "'News' is always singular." },
-                { q: "I prefer tea ______ coffee.", options: ["than", "to", "over", "with"], ans: "to", hint: "Words like prefer take 'to'." },
-                { q: "He has been here ______ Monday.", options: ["for", "from", "since", "during"], ans: "since", hint: "Used for a specific point in time." }
-            ];
+        const pyqList = document.getElementById('pyq-list');
+        pyqData.forEach(item => {
+            pyqList.innerHTML += `
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+                    <span class="text-[10px] font-black bg-red-100 text-red-600 px-3 py-1 rounded-full uppercase">${item.exam}</span>
+                    <p class="text-lg font-bold text-slate-800 my-4">${item.question}</p>
+                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100 text-emerald-800 text-sm">
+                        <strong>Ans: ${item.ans}</strong><br/>${item.explain}
+                    </div>
+                </div>
+            `;
+        });
 
-            const shareApp = () => {
-                const text = "Jai Hind! 🇮🇳 Check out this Defence English Mastery App for NDA, CDS, AFCAT aspirants: https://mallikarjunumarani477-svg.github.io/Defence-english-app/";
-                window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-            };
+        // Load Grammar
+        const grammarData = [
+            { title: "Subject-Verb Agreement", rules: ["Singular subject = Singular verb.", "'Each', 'Every' are ALWAYS singular."] },
+            { title: "Articles", rules: ["'An' for vowel sounds (An honest man).", "'The' for specific items."] }
+        ];
 
-            const handleQuizAnswer = (opt) => {
-                if (opt === quizQuestions[currentQuestion].ans) setScore(score + 1);
-                if (currentQuestion + 1 < quizQuestions.length) {
-                    setCurrentQuestion(currentQuestion + 1);
-                } else {
-                    setShowResult(true);
-                }
-            };
+        const grammarList = document.getElementById('grammar-list');
+        grammarData.forEach(mod => {
+            let rulesHtml = mod.rules.map(r => `<li class="flex gap-2 text-sm text-slate-700 font-bold mb-2">✅ ${r}</li>`).join('');
+            grammarList.innerHTML += `
+                <div class="bg-white rounded-[2rem] border border-slate-200 overflow-hidden">
+                    <div class="bg-slate-900 text-white px-8 py-4 font-black uppercase tracking-widest text-xs">${mod.title}</div>
+                    <div class="p-6"><ul>${rulesHtml}</ul></div>
+                </div>
+            `;
+        });
 
-            const NavBtn = ({ id, label, icon }) => (
-                <button 
-                    onClick={() => { setActiveTab(id); setIsMenuOpen(false); window.scrollTo(0,0); }}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all font-bold text-xs uppercase tracking-widest ${activeTab === id ? 'bg-red-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800'}`}
-                >
-                    <Icon name={icon} className="w-4 h-4" />
-                    <span className="hidden sm:inline">{label}</span>
-                </button>
-            );
+        // Quiz Logic
+        const quizQuestions = [
+            { q: "Synonym of 'ABANDON':", options: ["Keep", "Discard", "Accept", "Follow"], ans: "Discard" },
+            { q: "The news ______ not true.", options: ["are", "were", "is", "be"], ans: "is" }
+        ];
 
-            return (
-                <div className="min-h-screen flex flex-col selection:bg-red-500 selection:text-white">
-                    {/* Header */}
-                    <nav className="glass sticky top-0 z-50 border-b border-slate-200">
-                        <div className="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-                            <div className="flex items-center gap-3">
-                                <div className="bg-slate-900 p-2 rounded-lg shadow-lg">
-                                    <Icon name="shield" className="w-6 h-6 text-red-600" />
-                                </div>
-                                <div>
-                                    <h1 className="text-xl font-black text-slate-900 tracking-tighter">DEFENCE MASTER</h1>
-                                    <p className="text-[9px] text-slate-500 font-bold tracking-[0.3em] uppercase">Jai Hind Platform</p>
-                                </div>
-                            </div>
-                            
-                            <div className="hidden md:flex gap-2">
-                                <NavBtn id="home" label="Home" icon="shield" />
-                                <NavBtn id="pyq" label="PYQs" icon="history" />
-                                <NavBtn id="grammar" label="Grammar" icon="book" />
-                                <NavBtn id="quiz" label="Quiz" icon="brain" />
-                            </div>
+        let currentQuizIndex = 0;
+        let score = 0;
 
-                            <div className="flex gap-2">
-                                <button onClick={shareApp} className="bg-emerald-500 hover:bg-emerald-600 text-white p-2.5 rounded-xl shadow-md transition">
-                                    <Icon name="whatsapp" className="w-5 h-5 fill-white" />
-                                </button>
-                                <button className="md:hidden bg-slate-100 p-2.5 rounded-xl" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                                    <Icon name={isMenuOpen ? "history" : "shield"} className="w-5 h-5 text-slate-600" />
-                                </button>
-                            </div>
-                        </div>
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (currentQuizIndex < quizQuestions.length) {
+                const q = quizQuestions[currentQuizIndex];
+                container.innerHTML = `
+                    <div class="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-200 max-w-sm w-full">
+                        <h3 class="text-2xl font-black text-slate-800 mb-8">${q.q}</h3>
+                        ${q.options.map(opt => `<button onclick="handleQuiz('${opt}')" class="w-full text-left p-4 rounded-2xl border-2 border-slate-100 hover:border-red-600 font-bold mb-3">${opt}</button>`).join('')}
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="bg-white p-12 rounded-[3rem] shadow-xl text-center max-w-sm w-full border border-slate-200">
+                        <h2 class="text-2xl font-black uppercase">Report</h2>
+                        <p class="text-6xl font-black text-red-600 my-8">${score} / ${quizQuestions.length}</p>
+                        <button onclick="location.reload()" class="bg-slate-900 text-white w-full py-4 rounded-2xl font-bold">RE-ENGAGE</button>
+                    </div>
+                `;
+            }
+        }
 
-                        {isMenuOpen && (
-                            <div className="md:hidden bg-white border-t p-4 grid grid-cols-2 gap-2 animate-in slide-in-from-top-2 duration-200">
-                                <button onClick={()=>{setActiveTab('home'); setIsMenuOpen(false);}} className="p-4 bg-slate-50 rounded-xl font-bold text-xs text-slate-600">HOME</button>
-                                <button onClick={()=>{setActiveTab('pyq'); setIsMenuOpen(false);}} className="p-4 bg-slate-50 rounded-xl font-bold text-xs text-slate-600">PYQs</button>
-                                <button onClick={()=>{setActiveTab('grammar'); setIsMenuOpen(false);}} className="p-4 bg-slate-50 rounded-xl font-bold text-xs text-slate-600">GRAMMAR</button>
-                                <button onClick={()=>{setActiveTab('quiz'); setIsMenuOpen(false);}} className="p-4 bg-slate-50 rounded-xl font-bold text-xs text-slate-600">QUIZ</button>
-                            </div>
-                        )}
-                    </nav>
+        window.handleQuiz = function(opt) {
+            if (opt === quizQuestions[currentQuizIndex].ans) score++;
+            currentQuizIndex++;
+            renderQuiz();
+        };
 
-                    <main className="flex-grow max-w-5xl mx-auto w-full px-4 py-8">
-                        {activeTab === 'home' && (
-                            <div className="space-y-8 animate-in fade-in duration-500">
-                                <div className="bg-slate-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl">
-                                    <div className="relative z-10">
-                                        <span className="bg-red-600 text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-widest mb-4 inline-block">India's Aspirant Hub</span>
-                                        <h2 className="text-4xl sm:text-6xl font-black mb-4 leading-tight">Elevate Your <br/>Defence English.</h2>
-                                        <p className="text-slate-400 mb-8 max-w-sm text-lg leading-relaxed">Dedicated to the uniform. Study PYQs, Grammar and practice for free.</p>
-                                        <div className="flex flex-wrap gap-4">
-                                            <button onClick={() => setActiveTab('pyq')} className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-2xl flex items-center gap-3 transition shadow-xl active:scale-95">
-                                                Explore PYQs <Icon name="arrow" className="w-5 h-5" />
-                                            </button>
-                                            <button onClick={shareApp} className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-2xl flex items-center gap-3 transition border border-white/10">
-                                                Share App <Icon name="share" className="w-5 h-5" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="absolute -bottom-20 -right-20 opacity-10 rotate-12">
-                                        <Icon name="shield" className="w-[500px] h-[500px]" />
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                                    <div className="bg-white p-6 rounded-2xl border border-slate-200 military-card" onClick={() => setActiveTab('pyq')}>
-                                        <Icon name="history" className="text-red-600 mb-4" />
-                                        <h3 className="font-black text-slate-800">PYQ Archive</h3>
-                                        <p className="text-slate-500 text-xs mt-1">मागील वर्षांचे प्रश्न उत्तरासह.</p>
-                                    </div>
-                                    <div className="bg-white p-6 rounded-2xl border border-slate-200 military-card" onClick={() => setActiveTab('grammar')}>
-                                        <Icon name="book" className="text-red-600 mb-4" />
-                                        <h3 className="font-black text-slate-800">Grammar</h3>
-                                        <p className="text-slate-500 text-xs mt-1">शून्यपासून प्रगत व्याकरणाचे नियम.</p>
-                                    </div>
-                                    <div className="bg-white p-6 rounded-2xl border border-slate-200 military-card" onClick={() => setActiveTab('quiz')}>
-                                        <Icon name="brain" className="text-red-600 mb-4" />
-                                        <h3 className="font-black text-slate-800">Practice Quiz</h3>
-                                        <p className="text-slate-500 text-xs mt-1">तुमची दररोजची प्रगती तपासा.</p>
-                                    </div>
-                                    <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 military-card" onClick={shareApp}>
-                                        <Icon name="whatsapp" className="text-emerald-600 mb-4" />
-                                        <h3 className="font-black text-emerald-800">Support Aspirants</h3>
-                                        <p className="text-emerald-600 text-xs mt-1">हा उपक्रम मित्रांना शेअर करा.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {activeTab === 'pyq' && (
-                            <div className="space-y-6 animate-in fade-in duration-300">
-                                <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tighter border-l-4 border-red-600 pl-4 mb-8">Solved Previous Years</h2>
-                                {pyqData.map((item, idx) => (
-                                    <div key={idx} className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm military-card">
-                                        <div className="flex justify-between items-center mb-6">
-                                            <span className="text-[10px] font-black bg-red-100 text-red-600 px-3 py-1 rounded-full uppercase">{item.exam}</span>
-                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{item.topic}</span>
-                                        </div>
-                                        <p className="text-xl font-bold text-slate-800 mb-6 leading-relaxed">{item.question}</p>
-                                        {item.options && (
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-                                                {item.options.map((opt, i) => (
-                                                    <div key={i} className="p-4 bg-slate-50 border border-slate-100 rounded-2xl text-sm font-bold text-slate-600">{opt}</div>
-                                                ))}
-                                            </div>
-                                        )}
-                                        <div className="p-5 bg-emerald-50 rounded-2xl border border-emerald-100 shadow-inner">
-                                            <p className="text-sm font-black text-emerald-800 mb-1">Answer: {item.answer}</p>
-                                            <p className="text-xs text-emerald-700 leading-snug font-medium"><strong>Explain:</strong> {item.explanation}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-
-                        {activeTab === 'grammar' && (
-                            <div className="space-y-8 animate-in fade-in duration-300">
-                                <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tighter border-l-4 border-red-600 pl-4">English Grammar Guide</h2>
-                                {grammarModules.map((mod, i) => (
-                                    <div key={i} className="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden">
-                                        <div className="bg-slate-900 text-white px-8 py-5 font-black uppercase tracking-widest text-sm flex justify-between items-center">
-                                            {mod.title}
-                                            <Icon name="book" className="w-4 h-4 text-red-600" />
-                                        </div>
-                                        <div className="p-8 space-y-4">
-                                            {mod.rules.map((rule, idx) => (
-                                                <div key={idx} className="flex gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-100 items-start">
-                                                    <div className="bg-green-100 p-1 rounded-full"><Icon name="shield" className="w-3 h-3 text-green-600" /></div>
-                                                    <p className="text-slate-700 text-sm font-bold">{rule}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-         
+        renderQuiz();
+    </script>
+</body>
+</html>
+```
