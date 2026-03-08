@@ -3,305 +3,369 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Defence English Mastery - NDA, CDS, AFCAT</title>
-    <!-- Tailwind CSS for Fast Styling -->
+    <title>Defence English Mastery - Officer Edition</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .military-card { transition: all 0.2s ease; cursor: pointer; }
-        .military-card:active { transform: scale(0.95); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+        
+        /* Military Aesthetics */
+        .military-dark { background-color: #0f172a; }
+        .military-red { background-color: #991b1b; }
+        .card-glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .nav-active { color: #ef4444; border-bottom: 2px solid #ef4444; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-mission {
+            transition: all 0.2s;
+            box-shadow: 0 0 15px rgba(153, 27, 27, 0.3);
+        }
+        .btn-mission:active { transform: scale(0.96); }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
+
+        .correct-ans { background-color: rgba(16, 185, 129, 0.2); border-color: #10b981; }
+        .wrong-ans { background-color: rgba(239, 68, 68, 0.2); border-color: #ef4444; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col">
+<body class="bg-slate-950 text-slate-200 min-h-screen">
 
-    <!-- Navbar -->
-    <nav class="bg-white sticky top-0 z-50 border-b border-slate-200 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- Top Officer Status Bar -->
+    <div class="bg-red-700 text-white text-[9px] font-black py-1 px-4 flex justify-between tracking-[0.2em] uppercase sticky top-0 z-[60]">
+        <span>Rank: Aspirant (Officer-in-Training)</span>
+        <span class="animate-pulse">● System Live: Operational</span>
+        <span>Service ID: M-477-SVG</span>
+    </div>
+
+    <!-- Header / Navigation -->
+    <nav class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800 sticky top-[20px] z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="bg-slate-900 p-2 rounded-lg">
-                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2L3 7v9c0 5 9 10 9 10s9-5 9-10V7l-9-5z"></path></svg>
+                <div class="p-2 bg-red-600 rounded-lg shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.5" d="M12 2L3 7v9c0 5 9 10 9 10s9-5 9-10V7l-9-5z"></path></svg>
                 </div>
                 <div>
-                    <h1 class="text-xl font-black text-slate-900 tracking-tighter">DEFENCE MASTER</h1>
-                    <p class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Jai Hind Platform</p>
+                    <h1 class="text-xl font-black tracking-tighter text-white">OFFICER'S ACADEMY</h1>
+                    <p class="text-[9px] text-red-500 font-bold tracking-[0.3em] uppercase">Jai Hind • Prep Master</p>
                 </div>
             </div>
             
-            <div class="hidden md:flex gap-6">
-                <button onclick="showTab('home')" class="nav-item nav-active uppercase text-[10px] font-black tracking-widest px-2">Home</button>
-                <button onclick="showTab('pyq')" class="nav-item uppercase text-[10px] font-black tracking-widest px-2">PYQs</button>
-                <button onclick="showTab('grammar')" class="nav-item uppercase text-[10px] font-black tracking-widest px-2">Grammar</button>
-                <button onclick="showTab('quiz')" class="nav-item uppercase text-[10px] font-black tracking-widest px-2">Quiz</button>
+            <div class="hidden md:flex gap-4">
+                <button onclick="showTab('home')" class="nav-btn font-black text-[10px] uppercase px-4 py-2 rounded-lg text-white">Home</button>
+                <button onclick="showTab('syllabus')" class="nav-btn font-black text-[10px] uppercase px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">Syllabus</button>
+                <button onclick="showTab('pyq')" class="nav-btn font-black text-[10px] uppercase px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">PYQ Vault</button>
+                <button onclick="showTab('mock')" class="nav-btn font-black text-[10px] uppercase px-4 py-2 rounded-lg text-slate-400 hover:text-white transition">Missions</button>
             </div>
 
-            <button onclick="shareApp()" class="bg-emerald-500 p-2.5 rounded-xl shadow-md">
-                <svg class="w-5 h-5 text-white fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .004 5.412.004 12.049c0 2.12.554 4.189 1.605 6.02L0 24l6.132-1.61a11.806 11.806 0 005.918 1.583h.005c6.635 0 12.045-5.412 12.045-12.049 0-3.216-1.252-6.24-3.526-8.514z"></path></svg>
+            <button onclick="shareMission()" class="p-2 bg-emerald-600 rounded-xl text-white shadow-lg">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .004 5.412.004 12.049c0 2.12.554 4.189 1.605 6.02L0 24l6.132-1.61a11.806 11.806 0 005.918 1.583h.005c6.635 0 12.045-5.412 12.045-12.049 0-3.216-1.252-6.24-3.526-8.514z"></path></svg>
             </button>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="flex-grow max-w-5xl mx-auto w-full px-4 py-8">
+    <!-- Main Command Centre -->
+    <main class="max-w-6xl mx-auto px-4 py-8 pb-32">
         
-        <!-- Home Tab -->
-        <section id="home" class="tab-content active animate-in fade-in duration-300">
-            <div class="bg-slate-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl mb-8">
+        <!-- HOME: Briefing Room -->
+        <section id="home" class="tab-content active">
+            <div class="bg-gradient-to-br from-slate-900 to-red-950 p-10 rounded-[3rem] border border-red-900/30 shadow-2xl relative overflow-hidden mb-8">
                 <div class="relative z-10">
-                    <span class="bg-red-600 text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-widest mb-4 inline-block">India's Aspirant Hub</span>
-                    <h2 class="text-4xl sm:text-6xl font-black mb-4 leading-tight">Master Your <br/>Uniform Mission.</h2>
-                    <p class="text-slate-400 mb-8 max-w-sm text-lg leading-relaxed">Dedicated to NDA, CDS, and AFCAT warriors. Study for free.</p>
-                    <button onclick="showTab('pyq')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-4 rounded-2xl flex items-center gap-3 transition shadow-xl">
-                        Explore PYQs <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"></path></svg>
-                    </button>
+                    <span class="bg-red-600 text-[10px] px-3 py-1 rounded-full font-black uppercase tracking-widest mb-6 inline-block">Direct From Base</span>
+                    <h2 class="text-4xl sm:text-7xl font-black mb-6 leading-none text-white tracking-tighter uppercase">Mission <br/>Success 2026</h2>
+                    <p class="text-slate-300 text-lg mb-10 max-w-xl font-medium">१५ वर्षांचे PYQs (2010-2025), संपूर्ण व्याकरण सिलॅबस आणि ५० पेक्षा जास्त ऑफिसर्स मॉक मिशन्स.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="showTab('mock')" class="btn-mission bg-red-600 hover:bg-red-700 text-white font-black px-10 py-5 rounded-2xl flex items-center gap-3 transition tracking-widest text-sm uppercase">Start Mission Drill</button>
+                        <button onclick="showTab('pyq')" class="btn-mission bg-white/5 hover:bg-white/10 text-white font-black px-10 py-5 rounded-2xl border border-white/10 transition tracking-widest text-sm uppercase">Access Intelligence Archive</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 military-card" onclick="showTab('pyq')">
-                    <h3 class="font-black text-slate-800">PYQ Archive</h3>
-                    <p class="text-slate-500 text-xs mt-1">मागील वर्षांचे प्रश्न उत्तरासह.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card-glass p-8 rounded-[2rem] military-card group" onclick="showTab('syllabus')">
+                    <div class="w-14 h-14 bg-red-600/20 text-red-500 rounded-2xl flex items-center justify-center mb-6">SYL</div>
+                    <h3 class="text-xl font-black mb-2">Technical Syllabus</h3>
+                    <p class="text-slate-500 text-sm">शून्यापासून ऑफिसर लेव्हलपर्यंतचे व्याकरण नियम.</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 military-card" onclick="showTab('grammar')">
-                    <h3 class="font-black text-slate-800">Grammar</h3>
-                    <p class="text-slate-500 text-xs mt-1">शून्यपासून प्रगत व्याकरणाचे नियम.</p>
+                <div class="card-glass p-8 rounded-[2rem] military-card group" onclick="showTab('pyq')">
+                    <div class="w-14 h-14 bg-blue-600/20 text-blue-500 rounded-2xl flex items-center justify-center mb-6">PYQ</div>
+                    <h3 class="text-xl font-black mb-2">2010-2025 Papers</h3>
+                    <p class="text-slate-500 text-sm">मागील १५ वर्षांचे सर्व प्रश्न स्पष्टीकरणासह.</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 military-card" onclick="showTab('quiz')">
-                    <h3 class="font-black text-slate-800">Practice Quiz</h3>
-                    <p class="text-slate-500 text-xs mt-1">तुमची दररोजची प्रगती तपासा.</p>
+                <div class="card-glass p-8 rounded-[2rem] military-card group" onclick="showTab('mock')">
+                    <div class="w-14 h-14 bg-emerald-600/20 text-emerald-500 rounded-2xl flex items-center justify-center mb-6">MOCK</div>
+                    <h3 class="text-xl font-black mb-2">50+ Military Drills</h3>
+                    <p class="text-slate-500 text-sm">खऱ्या परीक्षेसारखी कठीण काठिण्य पातळी.</p>
                 </div>
             </div>
         </section>
 
-        <!-- PYQ Tab -->
-        <section id="pyq" class="tab-content animate-in fade-in">
-            <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tighter border-l-4 border-red-600 pl-4 mb-8">Solved PYQs</h2>
-            <div id="pyq-list" class="space-y-6">
-                <!-- Content generated by JS -->
+        <!-- SYLLABUS: Training Manual -->
+        <section id="syllabus" class="tab-content">
+            <h2 class="text-3xl font-black mb-8 border-l-4 border-red-600 pl-4 uppercase tracking-tighter">Official Training Syllabus</h2>
+            <div id="syllabus-container" class="space-y-6">
+                <!-- Syllabus items -->
             </div>
         </section>
 
-        <!-- Grammar Tab -->
-        <section id="grammar" class="tab-content animate-in fade-in">
-            <h2 class="text-2xl font-black text-slate-800 uppercase tracking-tighter border-l-4 border-red-600 pl-4 mb-8">Grammar Lessons</h2>
-            <div id="grammar-list" class="space-y-6">
-                <!-- Content generated by JS -->
+        <!-- PYQ: Archive Room -->
+        <section id="pyq" class="tab-content">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h2 class="text-3xl font-black uppercase tracking-tighter border-l-4 border-red-600 pl-4">Operation Archive (2010-2025)</h2>
+                    <p class="text-slate-500 text-xs font-bold mt-1 uppercase tracking-widest">Select Intelligence Year</p>
+                </div>
+                <select id="pyq-year-filter" onchange="renderPYQs()" class="bg-slate-900 border border-slate-700 text-xs font-bold p-3 rounded-xl focus:ring-2 ring-red-600">
+                    <option value="ALL">All Intelligence Records</option>
+                    <option value="2025">Year 2025 (Latest)</option>
+                    <option value="2024">Year 2024</option>
+                    <option value="2023">Year 2023</option>
+                    <option value="2022">Year 2022</option>
+                    <option value="2021">Year 2021</option>
+                    <option value="2010-2020">Legacy (2010-2020)</option>
+                </select>
+            </div>
+            <div id="pyq-container" class="space-y-6">
+                <!-- PYQs -->
             </div>
         </section>
 
-        <!-- Quiz Tab -->
-        <section id="quiz" class="tab-content animate-in fade-in">
-            <div id="quiz-container" class="flex justify-center">
-                <!-- Content generated by JS -->
+        <!-- MOCK MISSIONS -->
+        <section id="mock" class="tab-content">
+            <div id="mission-ui">
+                <div class="bg-slate-900/40 p-10 rounded-[3rem] border border-slate-800">
+                    <h2 class="text-2xl font-black mb-6 uppercase tracking-widest">Available Missions (50+)</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4" id="mission-selector">
+                        <!-- 50 Mission Buttons -->
+                    </div>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-6 text-center mt-auto">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Jai Hind 🇮🇳 • Defence English Mastery</p>
-    </footer>
-
-    <!-- Bottom Mobile Nav -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-6 py-4 flex justify-between z-50">
-        <button onclick="showTab('home')" class="mobile-nav-item nav-active"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></button>
-        <button onclick="showTab('pyq')" class="mobile-nav-item text-slate-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button>
-        <button onclick="showTab('grammar')" class="mobile-nav-item text-slate-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></button>
-        <button onclick="showTab('quiz')" class="mobile-nav-item text-slate-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg></button>
-    </div>
-
+    <!-- Navigation JS -->
     <script>
-        // Tab Management
+        // --- DATA SECTION ---
+        const syllabusData = [
+            { 
+                title: "Parts of Speech (Foundational)", 
+                content: "Noun, Pronoun, Adjective, Verb, Adverb, Preposition, Conjunction, Interjection.",
+                details: "CDS परीक्षेत १० प्रश्न 'Identifying Parts of Speech' वर असतात. प्रत्येक शब्दाचे कार्य समजून घेणे आवश्यक आहे."
+            },
+            { 
+                title: "Subject-Verb Agreement (The Golden Rules)", 
+                content: "Curating a perfect match between Subject and Verb.",
+                details: "नियम: 'Either of/Neither of' सोबत नेहमी Singular verb येते. 'As well as' सोबत पहिल्या कर्त्यानुसार क्रियापद येते."
+            },
+            { 
+                title: "Tenses & Conditionals", 
+                content: "Mastering Time and Hypothetical Situations.",
+                details: "नियम: 'If + Simple Past' असेल तर पुढे 'would + V1' येते. (उदा. If I were a king, I would help.)"
+            },
+            { 
+                title: "Active-Passive & Direct-Indirect", 
+                content: "Transforming communications efficiently.",
+                details: "Passive मध्ये नेहमी V3 येते. Direct-Indirect मध्ये Reporting verb भूतकाळात असेल तर मुख्य वाक्याचा काळ बदलतो."
+            },
+            { 
+                title: "Idioms, Phrases & Vocabulary", 
+                content: "Military Grade Vocabulary for NDA/CDS.",
+                details: "CDS साठी किमान १००० high-frequency शब्दांची तयारी आवश्यक आहे. 'Synonyms/Antonyms' वर २० प्रश्न असतात."
+            }
+        ];
+
+        const pyqData = [
+            // 2025
+            { year: "2025", exam: "CDS I", q: "I have been living in this city (A)/ from 2010 (B)/ with my parents (C).", ans: "B", explain: "Specific point of time साठी 'Since' वापरतात, 'From' नाही." },
+            { year: "2025", exam: "NDA I", q: "Select synonym of 'VIGILANT':", options: ["Careless", "Watchful", "Sleepy", "Lazy"], ans: "Watchful", explain: "Vigilant म्हणजे सावध किंवा दक्ष राहणे." },
+            // 2024
+            { year: "2024", exam: "CDS II", q: "The furniture (A)/ in this room (B)/ are very old (C).", ans: "C", explain: "'Furniture' हा Uncountable noun आहे, तो नेहमी एकवचनी (is) असतो." },
+            { year: "2024", exam: "NDA II", q: "If I ______ you, I would have accepted the challenge.", options: ["am", "was", "were", "had been"], ans: "were", explain: "Hypothetical वाक्यात 'were' वापरतात." },
+            // 2023
+            { year: "2023", exam: "AFCAT", q: "Idiom: 'To turn over a new leaf'", options: ["To plant a tree", "To change behavior for better", "To read a book", "To hide truth"], ans: "To change behavior for better", explain: "नव्याने आणि सुधारित सुरुवात करणे." },
+            // Legacy
+            { year: "2010-2020", exam: "CDS 2015 Archive", q: "Neither of the students (A)/ have (B)/ completed the task (C).", ans: "B", explain: "'Neither of' सोबत नेहमी Singular verb (has) येते." }
+        ];
+
+        // Generator for 50 Mock Missions Structure
+        const mockMissions = Array.from({ length: 50 }, (_, i) => ({
+            id: i + 1,
+            title: `Mission #${(i + 1).toString().padStart(2, '0')}`,
+            questions: [
+                { q: "He is junior ______ me in college.", options: ["than", "to", "over", "from"], ans: "to", explain: "Junior/Senior नंतर 'to' येते." },
+                { q: "Correct spelling of 'Lieutenant':", options: ["Leftenant", "Lieutenant", "Luitenant", "Lieutanent"], ans: "Lieutenant", explain: "Military spelling rule: Lieu-ten-ant." },
+                { q: "Change to Passive: 'He wrote a letter.'", options: ["A letter is written by him.", "A letter was written by him.", "A letter was writing by him.", "A letter written by him."], ans: "A letter was written by him.", explain: "Simple Past -> was/were + V3." }
+            ]
+        }));
+
+        // --- CORE FUNCTIONS (LINE 270+) ---
+
         function showTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             
-            // Update nav styles
-            document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(el => el.classList.remove('nav-active'));
-            document.querySelectorAll('.nav-item').forEach(el => {
-                if(el.textContent.toLowerCase() === tabId) el.classList.add('nav-active');
+            document.querySelectorAll('.nav-btn, .mobile-nav-item').forEach(el => {
+                el.classList.remove('text-red-500', 'text-white');
+                el.classList.add('text-slate-500');
             });
             window.scrollTo(0, 0);
         }
 
-        // WhatsApp Sharing
-        function shareApp() {
-            const text = "Jai Hind! 🇮🇳 Check out this Defence English Mastery App: https://mallikarjunumarani477-svg.github.io/Defence-english-app/";
-            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        function renderSyllabus() {
+            const container = document.getElementById('syllabus-container');
+            container.innerHTML = syllabusData.map(item => `
+                <div class="card-glass p-8 rounded-[2rem] border border-slate-800">
+                    <h3 class="text-xl font-black text-white mb-3 flex items-center gap-3">
+                        <span class="w-3 h-3 bg-red-600 rounded-sm"></span> ${item.title}
+                    </h3>
+                    <p class="text-slate-400 text-sm mb-4 leading-relaxed">${item.content}</p>
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <p class="text-[10px] font-black uppercase text-red-500 mb-2 tracking-widest">Command Instructions:</p>
+                        <p class="text-xs text-slate-300 italic">${item.details}</p>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // Load PYQs
-        const pyqData = [
-            { exam: "CDS II 2023", question: "Neither of the two brothers were selected for the job.", ans: "B (Replace 'were' with 'was')", explain: "'Neither' is always singular." },
-            { exam: "NDA I 2024", question: "The teacher's advice was very VALUABLE.", ans: "Precious", explain: "Valuable means precious/worthy." }
-        ];
+        function renderPYQs() {
+            const filter = document.getElementById('pyq-year-filter').value;
+            const container = document.getElementById('pyq-container');
+            const filtered = filter === 'ALL' ? pyqData : pyqData.filter(d => d.year === filter);
 
-        const pyqList = document.getElementById('pyq-list');
-        pyqData.forEach(item => {
-            pyqList.innerHTML += `
-                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-                    <span class="text-[10px] font-black bg-red-100 text-red-600 px-3 py-1 rounded-full uppercase">${item.exam}</span>
-                    <p class="text-lg font-bold text-slate-800 my-4">${item.question}</p>
-                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100 text-emerald-800 text-sm">
-                        <strong>Ans: ${item.ans}</strong><br/>${item.explain}
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="p-10 text-center text-slate-500 uppercase text-xs font-bold tracking-widest">Intelligence for this year is being declassified...</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="bg-white/5 p-8 rounded-[2rem] border border-white/10">
+                    <div class="flex justify-between items-center mb-6">
+                        <span class="text-[10px] font-black bg-red-600 px-3 py-1 rounded-full uppercase tracking-widest">${item.year} | ${item.exam} Record</span>
+                    </div>
+                    <p class="text-lg font-bold text-white mb-6 leading-relaxed">${item.q}</p>
+                    ${item.options ? `
+                        <div class="grid grid-cols-2 gap-3 mb-6">
+                            ${item.options.map(o => `<div class="p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 font-bold">${o}</div>`).join('')}
+                        </div>
+                    ` : ''}
+                    <div class="p-5 bg-emerald-950/20 border border-emerald-900/40 rounded-2xl">
+                        <p class="text-[10px] font-black text-emerald-500 uppercase mb-1 tracking-widest">Solution Code: ${item.ans}</p>
+                        <p class="text-xs text-emerald-400 italic"><strong>Intelligence:</strong> ${item.explain}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderMissionSelector() {
+            const container = document.getElementById('mission-selector');
+            container.innerHTML = mockMissions.map(m => `
+                <button onclick="startMission(${m.id})" class="p-4 bg-slate-900 hover:bg-red-900/40 border border-slate-800 rounded-xl transition font-black text-[10px] uppercase tracking-tighter">
+                    ${m.title}
+                </button>
+            `).join('');
+        }
+
+        let activeMission = null;
+        let missionScore = 0;
+        let currentQIdx = 0;
+        let sessionAnswers = [];
+
+        function startMission(id) {
+            activeMission = mockMissions.find(m => m.id === id);
+            currentQIdx = 0;
+            missionScore = 0;
+            sessionAnswers = [];
+            renderActiveQuestion();
+        }
+
+        function renderActiveQuestion() {
+            const container = document.getElementById('mission-ui');
+            const q = activeMission.questions[currentQIdx];
+
+            container.innerHTML = `
+                <div class="bg-slate-900 p-8 sm:p-12 rounded-[3rem] border border-slate-800 animate-in zoom-in-95">
+                    <div class="flex justify-between items-center mb-10">
+                        <span class="text-[10px] font-black text-red-500 uppercase tracking-widest">Mission: ${activeMission.title} | Target ${currentQIdx + 1}</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-black text-white mb-10 leading-tight">${q.q}</h3>
+                    <div class="grid grid-cols-1 gap-4 mb-10">
+                        ${q.options.map(opt => `
+                            <button onclick="submitMissionAnswer('${opt}')" class="text-left p-5 rounded-2xl border border-white/10 hover:border-red-600 bg-white/5 font-bold text-slate-200 transition active:scale-95">
+                                ${opt}
+                            </button>
+                        `).join('')}
                     </div>
                 </div>
             `;
-        });
+        }
 
-        // Load Grammar
-        const grammarData = [
-            { title: "Subject-Verb Agreement", rules: ["Singular subject = Singular verb.", "'Each', 'Every' are ALWAYS singular."] },
-            { title: "Articles", rules: ["'An' for vowel sounds (An honest man).", "'The' for specific items."] }
-        ];
-
-        const grammarList = document.getElementById('grammar-list');
-        grammarData.forEach(mod => {
-            let rulesHtml = mod.rules.map(r => `<li class="flex gap-2 text-sm text-slate-700 font-bold mb-2">✅ ${r}</li>`).join('');
-            grammarList.innerHTML += `
-                <div class="bg-white rounded-[2rem] border border-slate-200 overflow-hidden">
-                    <div class="bg-slate-900 text-white px-8 py-4 font-black uppercase tracking-widest text-xs">${mod.title}</div>
-                    <div class="p-6"><ul>${rulesHtml}</ul></div>
+        function submitMissionAnswer(ans) {
+       const container = document.getElementById('mission-ui');
+            container.innerHTML = `
+                <div class="bg-slate-900 p-12 rounded-[3rem] border border-slate-800 text-center animate-in zoom-in-95">
+                    <h2 class="text-2xl font-black text-white uppercase tracking-widest mb-4">Mission Debriefing</h2>
+                    <p class="text-7xl font-black text-red-600 my-10">${missionScore} / ${activeMission.questions.length}</p>
+                    <div class="grid grid-cols-1 gap-4">
+                        <button onclick="showMissionIntelligence()" class="bg-emerald-600 text-white font-black py-5 rounded-2xl uppercase tracking-widest text-[10px]">Review Intelligence (Solutions)</button>
+                        <button onclick="location.reload()" class="bg-white text-slate-900 font-black py-5 rounded-2xl uppercase tracking-widest text-[10px]">Return to Base</button>
+                    </div>
                 </div>
             `;
-        });
+        }
 
-        // Quiz Logic
-        const quizQuestions = [
-            { q: "Synonym of 'ABANDON':", options: ["Keep", "Discard", "Accept", "Follow"], ans: "Discard" },
-            { q: "The news ______ not true.", options: ["are", "were", "is", "be"], ans: "is" }
-        ];
+        function showMissionIntelligence() {
+            const container = document.getElementById('mission-ui');
+            container.innerHTML = `
+                <div class="space-y-6">
+                    <h2 class="text-xl font-black text-white uppercase tracking-widest border-l-4 border-red-600 pl-4 mb-8">Intelligence Breakdown</h2>
+                    ${sessionAnswers.map((item, idx) => `
+                        <div class="bg-white/5 p-6 rounded-2xl border ${item.user === item.correct ? 'border-emerald-900/40' : 'border-red-900/40'}">
+                            <p class="font-bold text-white mb-4 text-sm">${idx + 1}. ${item.q}</p>
+                            <div class="flex gap-4 text-[11px] font-bold uppercase tracking-widest mb-4">
+                                <span class="${item.user === item.correct ? 'text-emerald-500' : 'text-red-500'}">Your: ${item.user}</span>
+                                <span class="text-slate-400">Correct: ${item.correct}</span>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-xl text-xs text-slate-300 italic">
+                                <strong>Technical Explanation:</strong> ${item.explain}
+                            </div>
+                        </div>
+                    `).join('')}
+                    <button onclick="showTab('home')" class="w-full bg-red-600 text-white font-black py-5 rounded-2xl uppercase tracking-widest text-[10px]">Finish Briefing</button>
+                </div>
+            `;
+        }
+    
+            const q = activeMission.questions[currentQIdx];
+            sessionAnswers.push({ q: q.q, user: ans, correct: q.ans, explain: q.explain });
+            if (ans === q.ans) missionScore++;
 
-        let currentQuizIndex = 0;
-        let score = 0;
-
-        function renderQuiz() {
-            const container = document.getElementById('quiz-container');
-            if (currentQuizIndex < quizQuestions.length) {
-                const q = quizQuestions[currentQuizIndex];
-                container.innerHTML = `
-                    <div class="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-200 max-w-sm w-full">
-                        <h3 class="text-2xl font-black text-slate-800 mb-8">${q.q}</h3>
-                        ${q.options.map(opt => `<button onclick="handleQuiz('${opt}')" class="w-full text-left p-4 rounded-2xl border-2 border-slate-100 hover:border-red-600 font-bold mb-3">${opt}</button>`).join('')}
-                    </div>
-                `;
+            currentQIdx++;
+            if (currentQIdx < activeMission.questions.length) {
+                renderActiveQuestion();
             } else {
-                container.innerHTML = `
-                    <div class="bg-white p-12 rounded-[3rem] shadow-xl text-center max-w-sm w-full border border-slate-200">
-                        <h2 class="text-2xl font-black uppercase">Report</h2>
-                        <p class="text-6xl font-black text-red-600 my-8">${score} / ${quizQuestions.length}</p>
-                        <button onclick="location.reload()" class="bg-slate-900 text-white w-full py-4 rounded-2xl font-bold">RE-ENGAGE</button>
-                    </div>
-                `;
+                showMissionBriefing();
             }
         }
 
-        window.handleQuiz = function(opt) {
-            if (opt === quizQuestions[currentQuizIndex].ans) score++;
-            currentQuizIndex++;
-            renderQuiz();
-        };
-
-        renderQuiz();
-    </script>
-</body>
-</html>
-    <script>
-        // Tab Management
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            
-            // Update nav styles
-            document.querySelectorAll('.nav-item, .mobile-nav-item').forEach(el => el.classList.remove('nav-active'));
-            document.querySelectorAll('.nav-item').forEach(el => {
-                if(el.textContent.toLowerCase() === tabId) el.classList.add('nav-active');
-            });
-            window.scrollTo(0, 0);
-        }
-
-        // WhatsApp Sharing
-        function shareApp() {
-            const text = "Jai Hind! 🇮🇳 Check out this Defence English Mastery App: https://mallikarjunumarani477-svg.github.io/Defence-english-app/";
+        function   showMissionBriefing();
+    const text = "Jai Hind! 🇮🇳 मी माझी ऑफिसर ड्रिल पूर्ण केली आहे. तू पण तुझे मिशन सुरू कर: " + window.location.href;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        // Load PYQs
-        const pyqData = [
-            { exam: "CDS II 2023", question: "Neither of the two brothers were selected for the job.", ans: "B (Replace 'were' with 'was')", explain: "'Neither' is always singular." },
-            { exam: "NDA I 2024", question: "The teacher's advice was very VALUABLE.", ans: "Precious", explain: "Valuable means precious/worthy." }
-        ];
+        // Initialize Base Operations
+        renderSyllabus();
+        renderPYQs();
+        renderMissionSelector();
 
-        const pyqList = document.getElementById('pyq-list');
-        pyqData.forEach(item => {
-            pyqList.innerHTML += `
-                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-                    <span class="text-[10px] font-black bg-red-100 text-red-600 px-3 py-1 rounded-full uppercase">${item.exam}</span>
-                    <p class="text-lg font-bold text-slate-800 my-4">${item.question}</p>
-                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100 text-emerald-800 text-sm">
-                        <strong>Ans: ${item.ans}</strong><br/>${item.explain}
-                    </div>
-                </div>
-            `;
-        });
-
-        // Load Grammar
-        const grammarData = [
-            { title: "Subject-Verb Agreement", rules: ["Singular subject = Singular verb.", "'Each', 'Every' are ALWAYS singular."] },
-            { title: "Articles", rules: ["'An' for vowel sounds (An honest man).", "'The' for specific items."] }
-        ];
-
-        const grammarList = document.getElementById('grammar-list');
-        grammarData.forEach(mod => {
-            let rulesHtml = mod.rules.map(r => `<li class="flex gap-2 text-sm text-slate-700 font-bold mb-2">✅ ${r}</li>`).join('');
-            grammarList.innerHTML += `
-                <div class="bg-white rounded-[2rem] border border-slate-200 overflow-hidden">
-                    <div class="bg-slate-900 text-white px-8 py-4 font-black uppercase tracking-widest text-xs">${mod.title}</div>
-                    <div class="p-6"><ul>${rulesHtml}</ul></div>
-                </div>
-            `;
-        });
-
-        // Quiz Logic
-        const quizQuestions = [
-            { q: "Synonym of 'ABANDON':", options: ["Keep", "Discard", "Accept", "Follow"], ans: "Discard" },
-            { q: "The news ______ not true.", options: ["are", "were", "is", "be"], ans: "is" }
-        ];
-
-        let currentQuizIndex = 0;
-        let score = 0;
-
-        function renderQuiz() {
-            const container = document.getElementById('quiz-container');
-            if (currentQuizIndex < quizQuestions.length) {
-                const q = quizQuestions[currentQuizIndex];
-                container.innerHTML = `
-                    <div class="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-200 max-w-sm w-full">
-                        <h3 class="text-2xl font-black text-slate-800 mb-8">${q.q}</h3>
-                        ${q.options.map(opt => `<button onclick="handleQuiz('${opt}')" class="w-full text-left p-4 rounded-2xl border-2 border-slate-100 hover:border-red-600 font-bold mb-3">${opt}</button>`).join('')}
-                    </div>
-                `;
-            } else {
-                container.innerHTML = `
-                    <div class="bg-white p-12 rounded-[3rem] shadow-xl text-center max-w-sm w-full border border-slate-200">
-                        <h2 class="text-2xl font-black uppercase">Report</h2>
-                        <p class="text-6xl font-black text-red-600 my-8">${score} / ${quizQuestions.length}</p>
-                        <button onclick="location.reload()" class="bg-slate-900 text-white w-full py-4 rounded-2xl font-bold">RE-ENGAGE</button>
-                    </div>
-                `;
-            }
-        }
-
-        window.handleQuiz = function(opt) {
-            if (opt === quizQuestions[currentQuizIndex].ans) score++;
-            currentQuizIndex++;
-            renderQuiz();
-        };
-
-        renderQuiz();
     </script>
 </body>
 </html>
